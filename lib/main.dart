@@ -1,5 +1,7 @@
+import 'package:doc_appointment/appointments.dart';
 import 'package:doc_appointment/home.dart';
 import 'package:doc_appointment/login.dart';
+import 'package:doc_appointment/profile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +19,9 @@ class MyApp extends StatelessWidget {
       initialRoute: 'login',
       routes: {
         'login':(context)=>MyLogin(),
-        'home': (context)=>HomeScreen(),
+        'home':(context)=>HomeScreen(),
+        'appointments':(context)=>MyAppointments(),
+        'profile':(context)=>MyProfile()
       },
     );
   }

@@ -1,28 +1,7 @@
-import 'package:doc_appointment/appointments.dart';
-import 'package:doc_appointment/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_scroll_slider/auto_scroll_slider.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Doctor Appointment App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomeScreen(),
-      routes: {
-        '/appointments': (context) => MyAppointments(),
-        '/profile': (context) => MyProfile(),
-      },
-    );
-  }
-}
+import 'appointments.dart';
+import 'profile.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -38,17 +17,17 @@ class _HomeScreenState extends State<HomeScreen> {
     'https://www.quytech.com/blog/wp-content/uploads/2020/04/doctor-and-patient-video-consultation-app-1.png',
   ];
 
-  List<String> doctorNames = [
-    'Dr. Asthana',
-    'Dr. Jha',
-    'Dr. Vipul',
-    'Dr. Monica',
-    'Dr. Arti',
-    'Dr. Pooja',
-    'Dr. Vishal',
-    'Dr. Anushka',
-    'Dr. Kirty',
-  ];
+  final Map<String, String> doctors = {
+    'Dr. Asthana': 'Cardiologist',
+    'Dr. Jha': 'Dermatologist',
+    'Dr. Vipul': 'Neurologist',
+    'Dr. Monica': 'Pediatrician',
+    'Dr. Arti': 'Gynecologist',
+    'Dr. Pooja': 'Orthopedic',
+    'Dr. Vishal': 'ENT Specialist',
+    'Dr. Anushka': 'Dentist',
+    'Dr. Kirty': 'Ophthalmologist',
+  };
 
   String _searchText = '';
   int _selectedIndex = 0;
@@ -57,13 +36,25 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
     });
-    // Add navigation logic here if needed
-    // For example, Navigator.push or other page navigation methods
+
+    // Navigate based on the selected index
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, 'home');
+      // Current Page
+        break;
+      case 1:
+        Navigator.pushNamed(context, 'appointments');
+        break;
+      case 2:
+        Navigator.pushNamed(context, 'profile');
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> filteredDoctors = doctorNames.where((name) {
+    List<String> filteredDoctors = doctors.keys.where((name) {
       return name.toLowerCase().contains(_searchText.toLowerCase());
     }).toList();
 
@@ -120,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Column(
               children: filteredDoctors.map((doctor) {
-                return buildDoctorCard(doctor, 'Cardiologist');
+                return buildDoctorCard(doctor, doctors[doctor]!);
               }).toList(),
             ),
           ],
